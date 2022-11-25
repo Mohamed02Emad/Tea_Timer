@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/minutes"
+        android:textSize="22sp"
+        android:text="Minutes"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="@id/minutes"
+        app:layout_constraintRight_toRightOf="@id/minutes"
+        android:layout_marginBottom="4dp"
+        />
+
+    <NumberPicker
+        android:id="@+id/minutes"
+        android:layout_width="110dp"
+        android:layout_height="200dp"
+        android:solidColor="#838B8C8D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/seconds"
+        android:textSize="22sp"
+        android:text="Seconds"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="@id/seconds"
+        app:layout_constraintRight_toRightOf="@id/seconds"
+        android:layout_marginBottom="4dp"
+        />
+    <NumberPicker
+        android:id="@+id/seconds"
+        android:layout_width="110dp"
+        android:layout_height="200dp"
+        android:solidColor="#838B8C8D"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/minutes"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
