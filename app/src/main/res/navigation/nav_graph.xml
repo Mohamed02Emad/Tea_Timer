@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/setTimerFragment"
-        android:name="com.example.android.teatimer.SetTimerFragment"
+        android:name="com.example.android.teatimer.HomeFragment"
         android:label="fragment_set_timer"
-        tools:layout="@layout/fragment_set_timer" >
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_setTimerFragment_to_timerOnFragment"
             app:destination="@id/timerOnFragment" />

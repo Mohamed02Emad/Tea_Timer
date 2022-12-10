@@ -1,20 +1,24 @@
 package com.example.android.teatimer
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.example.android.teatimer.databinding.FragmentSetTimerBinding
-import kotlin.math.min
+import com.example.android.teatimer.databinding.FragmentHomeBinding
+import com.example.android.teatimer.service.MyService
 
 
-class SetTimerFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     var numbersToPick = Array<String?>(60) { null }
-    lateinit var binding: FragmentSetTimerBinding
+    lateinit var binding: FragmentHomeBinding
     var minutes = 0
     var seconds = 0
 
@@ -22,7 +26,7 @@ class SetTimerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSetTimerBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -35,10 +39,13 @@ class SetTimerFragment : Fragment() {
 
     private fun setOnClickListeners() {
         binding.StartTimerButton.setOnClickListener {
-            Constants.minutes = binding.TimerPicker.minutes.value
-            Constants.seconds = binding.TimerPicker.seconds.value
-            Navigation.findNavController(requireActivity(), R.id.my_nav_host_fragment)
-                .navigate(R.id.action_setTimerFragment_to_timerOnFragment)
+
+       //     CreateNotification("Hello")
+
+            val intent = Intent(requireActivity() , MyService::class.java)
+            intent.putExtra(Constants.MINUTES , binding.TimerPicker.minutes.value)
+            intent.putExtra(Constants.SECONDS, binding.TimerPicker.seconds.value)
+            requireActivity().startService(intent)
         }
     }
 
