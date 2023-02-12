@@ -1,5 +1,6 @@
 package com.example.android.teatimer
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +11,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AfterDoneActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAfterDoneBinding
+    private lateinit var binding: ActivityAfterDoneBinding
 
-    var myMinutes = 0
-    var mySeconds = 0
-    var isTeaReady = false
+    private var myMinutes = 0
+    private var mySeconds = 0
+    private var isTeaReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +35,14 @@ class AfterDoneActivity : AppCompatActivity() {
             stopService(intent)
         } else {
             lifecycleScope.launch {
-                StartTimer(myMinutes, mySeconds)
+                startTimer(myMinutes, mySeconds)
 
             }
         }
 
     }
 
-    private suspend fun StartTimer(minutes: Int, seconds: Int) {
+    private suspend fun startTimer(minutes: Int, seconds: Int) {
         var thisMinutes = Constants.minutes
         var thisSeconds = Constants.seconds
 
@@ -51,7 +52,7 @@ class AfterDoneActivity : AppCompatActivity() {
 
                 delay(1000)
                 thisSeconds--
-             binding.textView.text=thisMinutes.toString() + " M , " + thisSeconds + " S"
+             binding.textView.text= "$thisMinutes M , $thisSeconds S"
             }
             thisMinutes--
         }
@@ -70,7 +71,7 @@ class AfterDoneActivity : AppCompatActivity() {
 
     private fun setOnClicks() {
         binding.backButton.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

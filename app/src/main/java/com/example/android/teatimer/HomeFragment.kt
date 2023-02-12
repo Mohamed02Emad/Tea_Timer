@@ -1,15 +1,11 @@
 package com.example.android.teatimer
 
-import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.android.teatimer.databinding.FragmentHomeBinding
 import com.example.android.teatimer.service.MyService
@@ -17,15 +13,15 @@ import com.example.android.teatimer.service.MyService
 
 class HomeFragment : Fragment() {
 
-    var numbersToPick = Array<String?>(60) { null }
-    lateinit var binding: FragmentHomeBinding
-    var minutes = 0
-    var seconds = 0
+    private var numbersToPick = Array<String?>(60) { null }
+    private lateinit var binding: FragmentHomeBinding
+    private var minutes = 0
+    private var seconds = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -39,12 +35,9 @@ class HomeFragment : Fragment() {
 
     private fun setOnClickListeners() {
         binding.StartTimerButton.setOnClickListener {
-
-       //     CreateNotification("Hello")
-
             val intent = Intent(requireActivity() , MyService::class.java)
-            intent.putExtra(Constants.MINUTES , binding.TimerPicker.minutes.value)
-            intent.putExtra(Constants.SECONDS, binding.TimerPicker.seconds.value)
+            intent.putExtra(Constants.MINUTES , minutes)
+            intent.putExtra(Constants.SECONDS, seconds)
             requireActivity().startService(intent)
         }
     }
