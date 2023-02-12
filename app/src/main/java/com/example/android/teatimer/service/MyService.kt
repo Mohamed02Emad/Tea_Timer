@@ -3,6 +3,7 @@ package com.example.android.teatimer.service
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -50,9 +51,14 @@ class MyService : Service() {
                     thisSeconds
                 )
                 delay(1000)
+                val mediaPlayer = MediaPlayer.create(this, R.raw.beb)
+                mediaPlayer.start()
+
                 thisSeconds--
 
                 if (thisMinutes == 0 && thisSeconds == 0) {
+                    val mediaPlayer2 = MediaPlayer.create(this, R.raw.bell)
+                    mediaPlayer2.start()
                     createNotification("Tea is ready ya sayed", true, thisMinutes, thisSeconds)
                     isOn=false
                 }

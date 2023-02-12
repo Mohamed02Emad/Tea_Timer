@@ -1,14 +1,17 @@
 package com.example.android.teatimer
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.android.teatimer.databinding.FragmentHomeBinding
 import com.example.android.teatimer.service.MyService
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -35,8 +38,12 @@ class HomeFragment : Fragment() {
 
     private fun setOnClickListeners() {
         binding.StartTimerButton.setOnClickListener {
-            val intent = Intent(requireActivity() , MyService::class.java)
-            intent.putExtra(Constants.MINUTES , minutes)
+
+            var mediaPlayer = MediaPlayer.create(context, R.raw.ball)
+            mediaPlayer.start() // no need to call prepare(); create() does that for you
+
+            val intent = Intent(requireActivity(), MyService::class.java)
+            intent.putExtra(Constants.MINUTES, minutes)
             intent.putExtra(Constants.SECONDS, seconds)
             requireActivity().startService(intent)
         }
@@ -44,16 +51,29 @@ class HomeFragment : Fragment() {
 
     private fun setViews() {
 
+        val mediaPlayer2 = MediaPlayer.create(context, R.raw.touch)
         // minutes timer
         setNubmerPicker(binding.TimerPicker.minutes, numbersToPick)
         binding.TimerPicker.minutes.setOnValueChangedListener { numberPicker, oldValue, newValue ->
-         minutes = newValue
+            lifecycleScope.launch {
+                if (mediaPlayer2.isPlaying){
+                    mediaPlayer2.seekTo(0)
+                }
+                mediaPlayer2.start()
+            }
+            minutes = newValue
         }
 
         // seconds timer
         setNubmerPicker(binding.TimerPicker.seconds, numbersToPick)
         binding.TimerPicker.seconds.setOnValueChangedListener { numberPicker, oldValue, newValue ->
-          seconds = newValue
+            lifecycleScope.launch {
+                if (mediaPlayer2.isPlaying){
+                    mediaPlayer2.seekTo(0)
+                }
+                mediaPlayer2.start()
+            }
+            seconds = newValue
         }
 
     }
